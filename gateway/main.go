@@ -1,13 +1,32 @@
-package gateway
+package main
 
 import (
-	"fmt"
-
-	"github.com/luizpbraga/common"
+	"log"
+	"net/http"
+	"os"
 )
 
-var S = 22
+func addr() string {
+	addr := os.Getenv("HTTP_ADDR")
+
+	if addr == "" {
+		addr = ":8080"
+	}
+
+	return addr
+}
+
+// load balancer
 
 func main() {
-	fmt.Println(common.U)
+	httpAddr := addr()
+	mux := http.NewServeMux()
+	handler := NewHandler()
+	handler.registerRouters(mux)
+
+	log.Printf("Starting HTPP server at %s\n", httpAddr)
+
+	if err := http.ListenAndServe(httpAddr, mux); err != nil {
+		log.Fatal("Failed to start the server")
+	}
 }
