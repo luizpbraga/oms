@@ -2,7 +2,7 @@
 TODO
 
 # Dependencies
-List of dependencies:
+- List of dependencies:
     - go 
     - gRPC 
     - RabbitMQ: Message broker 
@@ -12,4 +12,4 @@ List of dependencies:
     - Hashcorp: service discovery
     - Stripe: payment method
 
-
+![oms](./oms.png "OMS")
