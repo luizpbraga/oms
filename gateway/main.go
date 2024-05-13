@@ -3,23 +3,13 @@ package main
 import (
 	"log"
 	"net/http"
-	"os"
+
+	_ "github.com/joho/godotenv/autoload"
+	"github.com/luizpbraga/common"
 )
 
-func addr() string {
-	addr := os.Getenv("HTTP_ADDR")
-
-	if addr == "" {
-		addr = ":8080"
-	}
-
-	return addr
-}
-
-// load balancer
-
 func main() {
-	httpAddr := addr()
+	httpAddr := common.Getenv("HTTP_ADDR", ":3000")
 	mux := http.NewServeMux()
 	handler := NewHandler()
 	handler.registerRouters(mux)
