@@ -1,9 +1,9 @@
 { pkgs ? import <nixpkgs> {} }:
   pkgs.mkShell {
     nativeBuildInputs = with pkgs.buildPackages; [ 
-      go
+      # go
       air
-      mongodb
+      # mongodb
       protobuf
       grpcurl
       docker
