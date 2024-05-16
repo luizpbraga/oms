@@ -10,14 +10,20 @@ import (
 
 type grpcHandler struct {
 	pb.UnimplementedOrderServiceServer
+	service OrdersService
 }
 
-func initGRPCHandler(grpcServer *grpc.Server) {
-	handler := &grpcHandler{}
+func initGRPCHandler(grpcServer *grpc.Server, service OrdersService) {
+	handler := &grpcHandler{service: service}
 	pb.RegisterOrderServiceServer(grpcServer, handler)
 }
 
-func (h *grpcHandler) CreateOrder(context.Context, *pb.CreateOrderRequest) (*pb.Order, error) {
-	log.Println("New Order Received")
-	return &pb.Order{ID: "32"}, nil
+func (h *grpcHandler) CreateOrder(ctx context.Context, orderReq *pb.CreateOrderRequest) (*pb.Order, error) {
+	log.Printf("New Order Received %v\n", orderReq)
+
+	h.service.ValidateOrder(ctx, orderReq)
+
+	order := pb.Order{ID: "32"}
+
+	return &order, nil
 }

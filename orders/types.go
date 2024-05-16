@@ -1,10 +1,14 @@
 package main
 
-import "context"
+import (
+	"context"
+	pb "github.com/luizpbraga/common/api"
+)
 
 type OrdersService interface {
 	// grpc + payload
-	Create(context.Context) error
+	CreateOrder(context.Context) error
+	ValidateOrder(context.Context, *pb.CreateOrderRequest) error
 }
 
 type OrdersStore interface {
